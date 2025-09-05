@@ -11,7 +11,10 @@ const PORT = process.env.PORT || 8500;
 
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+    origin: "https://knowledge-hub-frontend-02.onrender.com",
+    credentials: true,
+  }));
 app.use("/auth",authRoutes);
 app.use("/docs",docsRoutes);
 
