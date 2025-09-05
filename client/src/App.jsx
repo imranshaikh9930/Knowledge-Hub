@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { useAuth } from "./Context/AuthContext";
+import { Toaster } from 'react-hot-toast';
 import "./App.css";
 import PrivateRoute from "./components/PrivateRoute";
 import Loader from "./components/Loader";
@@ -20,6 +21,9 @@ function App() {
   return (
     <div>
       {/* Navbar */}
+      <Toaster
+        position="top-right"
+      />
     <Navbar user={user} logout={logout}/>
 
       <Suspense

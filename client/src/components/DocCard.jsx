@@ -18,7 +18,7 @@ export default function DocCard({ doc, onSummarize, onGenTags }) {
     (doc.createdBy?._id === userInfo.id || userInfo.role === "admin");
 
   return (
-    <div className="border border-gray-100 bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition duration-300">
+    <div className="border border-gray-100 bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition duration-300 font-poppins">
       {/* Title & Author */}
       <div className="flex justify-between items-center mb-3">
         <h4 className="font-semibold text-blue-700 text-lg">{doc.title}</h4>

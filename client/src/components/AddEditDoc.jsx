@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/client";
+import toast from "react-hot-toast";
 
 export default function AddEditDoc() {
   const { id } = useParams();
@@ -44,7 +45,6 @@ export default function AddEditDoc() {
           .filter(Boolean),
       };
 
-      // ✅ Only allow if admin OR doc owner
       if (!id) {
         await api.post("/docs/create", payload);
       } else {
@@ -58,7 +58,7 @@ export default function AddEditDoc() {
           return;
         }
       }
-
+      toast.success("Doc's Updated")
       nav("/");
     } catch (err) {
       console.error("Error saving doc:", err);
@@ -66,7 +66,7 @@ export default function AddEditDoc() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-6 p-6 bg-gray-50 min-h-screen">
+    <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-6 p-6 bg-gray-50 min-h-screen font-poppins">
       {/* Form Section */}
       <div className="space-y-4 bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition">
         <h2 className="text-xl font-semibold text-blue-700 mb-2">

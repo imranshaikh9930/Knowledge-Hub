@@ -51,7 +51,7 @@ export default function Dashboard() {
   // }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-6 p-6 min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-6 p-6 min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 font-poppins">
       
       {/* Left Section */}
       <div>

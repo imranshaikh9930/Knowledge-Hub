@@ -1,7 +1,7 @@
 const express = require("express");
 const {auth} = require("../middlewares/authMiddleware");
 const aiLimiter =require("../middlewares/rateLimit");
-
+const Document = require("../model/document.model");
 const  {crateDocController,
 readDocController,
 summarizeDocController,
@@ -33,5 +33,16 @@ router.post("/:id/summarize",aiLimiter, summarizeDocController);
   router.post('/:id/tags', auth, aiLimiter,tagsController);
   router.post("/qa",aiLimiter,qnaController );
   
+  
+router.get("/tags", auth, async (req, res) => {
+  try {
+
+    const allTags = await Document.distinct("tags");
+    res.json({ tags: allTags });
+  } catch (err) {
+    console.error("Error fetching tags:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
   
 module.exports = router;

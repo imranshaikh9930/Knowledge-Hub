@@ -168,28 +168,32 @@ const deleteDocController =  async (req,res) => {
 }
 
 const tagsController = async (req,res) => {
-    try {
-        console.log(req.params.id)
-      const doc = await Document.findById(req.params.id);
-      if (!doc) return res.status(404).json({ message: 'Not found' });
-      const aiTags = await generateTags(doc.content).catch(()=>[]);
-      doc.tags = Array.from(new Set([...(doc.tags||[]), ...(aiTags||[])]));
-      await doc.save();
-      res.json({ tags: doc.tags });
-    } catch (err) { console.error(err); res.status(500).json({ message: 'Server error' }); }
+  try {
+    const doc = await Document.findById(req.params.id); 
+    if (!doc) return res.status(404).json({ message: 'Not found' });
+    
+    const aiTags = await generateTags(doc.content).catch(()=>[]);
+    doc.tags = Array.from(new Set([...(doc.tags||[]), ...(aiTags||[])]));
+    await doc.save();
+    
+    res.json({ tags: doc.tags });
+  } catch (err) { 
+    console.error(err); 
+    res.status(500).json({ message: 'Server error' }); 
+  }
 }
+
 
 const qnaController = async (req, res) => {
     try {
       const { question, tags } = req.body;
+     
       if (!question) {
         return res.status(400).json({ message: "Question required" });
       }
   
-      // 1. Embed the question
       const qEmbedding = await embedText(question);
   
-      // 2. Apply tag filters if any
       let filters = {};
       if (tags && tags.length > 0) {
         filters.tags = { $in: tags };
@@ -201,7 +205,7 @@ const qnaController = async (req, res) => {
         embedding: { $exists: true },
       }).limit(50);
   
-      // 3. Rank docs by cosine similarity
+    
       const ranked = docs
         .map((doc) => ({
           doc,
@@ -210,7 +214,6 @@ const qnaController = async (req, res) => {
         .sort((a, b) => b.score - a.score)
         .slice(0, 5);
   
-      // 4. Build context for Gemini
       const context = ranked
         .map(
           (r) => `Title: ${r.doc.title}\nContent: ${r.doc.content}`
@@ -227,7 +230,7 @@ const qnaController = async (req, res) => {
   Question: ${question}
   Answer:`;
   
-      // 5. Call Gemini
+    
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const resp = await model.generateContent(prompt);
   
@@ -235,7 +238,6 @@ const qnaController = async (req, res) => {
         resp.response?.candidates?.[0]?.content?.parts?.[0]?.text ||
         "No answer generated.";
   
-      // 6. Return answer + sources
       res.json({
         answer,
         sources: ranked.map((r) => ({

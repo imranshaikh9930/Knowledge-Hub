@@ -55,7 +55,7 @@ const loginController =  async (req, res) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(401).json({ message: "Invalid Credentials" });
+            return res.status(404).json({ message: "User not exists please Register !!" });
         }
 
         const isPassword = await bcrypt.compare(password, user.password);

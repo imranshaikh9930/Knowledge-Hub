@@ -8,20 +8,22 @@ export default function QnA() {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
 
-  useEffect(() => {
-    // Fetch available tags on mount
-    (async () => {
-      try {
-        const { data } = await api.get("/docs/tags");
-        setTags(data.tags || []);
-      } catch (err) {
-        console.error("Failed to fetch tags:", err);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+
+  //   (async () => {
+  //     try {
+  //       const { data } = await api.get("/docs/tags");
+  //       console.log(data);
+  //       setTags(data.tags || []);
+  //     } catch (err) {
+  //       console.error("Failed to fetch tags:", err);
+  //     }
+  //   })();
+  // }, []);
 
   async function ask() {
     if (!question.trim()) return;
+    
     try {
       const { data } = await api.post("/docs/qa", {
         question,
@@ -41,15 +43,15 @@ export default function QnA() {
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-gray-50 min-h-screen font-poppins">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">
-            Team Q&A
+            Q&A
           </h2>
 
-          {/* Tags filter */}
+          {/* Tags filter
           <div className="flex flex-wrap gap-2 mb-4">
             {tags.length === 0 ? (
               <p className="text-sm text-gray-500">No tags available</p>
@@ -68,7 +70,7 @@ export default function QnA() {
                 </button>
               ))
             )}
-          </div>
+          </div> */}
 
           {/* Question Input */}
           <div className="flex flex-col sm:flex-row gap-3">

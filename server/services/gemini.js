@@ -52,7 +52,7 @@ async function generateTags(text) {
     return [...new Set(words)].slice(0, 3);
   }
 
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const prompt = `Generate 3-5 short, comma-separated tags for the following text:\n\n${text}`;
   const result = await model.generateContent(prompt);
   return result.response.text().split(",").map((t) => t.trim());

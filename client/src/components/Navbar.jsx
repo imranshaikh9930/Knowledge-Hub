@@ -1,32 +1,32 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react"; // icons
 
 export default function Navbar({ user, logout }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="border-b border-gray-200 bg-white shadow-sm">
+    <nav className="border-b border-gray-200 bg-white shadow-sm font-poppins">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Left: Logo / Name */}
           <div className="flex items-center">
-            <Link to="/" className="text-xl font-bold text-blue-600">
-              MyApp
-            </Link>
+            <NavLink to="/" className="text-xl font-bold text-blue-600">
+              Knowledge-Hub
+            </NavLink>
           </div>
 
           {/* Desktop Links */}
           <div className="hidden md:flex gap-6 ml-10">
-            {user && <Link to="/" className="hover:text-blue-600 font-medium">Dashboard</Link>}
-            {user && <Link to="/search" className="hover:text-blue-600 font-medium">Search</Link>}
-            {user && <Link to="/add" className="hover:text-blue-600 font-medium">Add Doc</Link>}
-            {user && <Link to="/qna" className="hover:text-blue-600 font-medium">Q&A</Link>}
+            {user && <NavLink to="/" className={({isActive})=> isActive ? "text-blue-500 font-bold text-lg":"hover:text-blue-600 font-medium"}>Dashboard</NavLink>}
+            {user && <NavLink to="/search" className={({isActive})=> isActive ? "text-blue-500 font-bold text-lg":"hover:text-blue-600 font-medium"} >Search</NavLink>}
+            {user && <NavLink to="/add" className={({isActive})=> isActive ? "text-blue-500 font-bold text-lg":"hover:text-blue-600 font-medium"}>Add Doc</NavLink>}
+            {user && <NavLink to="/qna" className={({isActive})=> isActive ? "text-blue-500 font-bold text-lg":"hover:text-blue-600 font-medium"}>Q&A</NavLink>}
 
             {!user && (
               <>
-                <Link to="/login" className="hover:text-blue-600 font-medium">Login</Link>
-                <Link to="/register" className="hover:text-blue-600 font-medium">Register</Link>
+                <NavLink to="/login" className="hover:text-blue-600 font-medium">Login</NavLink>
+                <NavLink to="/register" className="hover:text-blue-600 font-medium">Register</NavLink>
               </>
             )}
           </div>

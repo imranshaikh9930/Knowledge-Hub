@@ -16,7 +16,7 @@ export default function ActivityFeed() {
   }, []);
 
   return (
-    <div className="border border-gray-100 bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition">
+    <div className="border border-gray-100 bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition font-poppins">
       {/* Header */}
       <h4 className="font-semibold text-blue-700 mb-4 text-lg">Team Activity</h4>
 
